@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> امتحان اونلاين - gelvano</title>
+    <link rel="icon" type="image/png" href="assets/6546847867645351321321354564687654545343.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .grade-buttons {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+            padding: 4rem 1rem;
+        }
+
+        .grade-button {
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 1.5rem 3rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.3rem;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(227, 24, 55, 0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .grade-button:hover {
+            background-color: var(--light-red);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(227, 24, 55, 0.3);
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: var(--primary-red);
+        }
+    </style>
+    <script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_cHJvbXB0LWNoYW1vaXMtNDAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://prompt-chamois-40.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
+</script>
+</head>
+<body>
+    <div id="sign-in"></div>
+    <div id="main-content" style="display:none;">
+    <!-- Header with Logo -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html">
+                <img loading="lazy" src="assets/logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
+            </a>
+        </div>
+    </header>
+
+    <!-- Grade Buttons Section -->
+    <section class="grade-buttons">
+        <a href="#" class="grade-button animate__animated animate__fadeInUp" onclick="window.location.href='FIRST_GRADE_TEST_LINK'">
+            الصف الأول الثانوي
+        </a>
+        <a href="#" class="grade-button animate__animated animate__fadeInUp" style="animation-delay: 0.2s" onclick="window.location.href='SECOND_GRADE_TEST_LINK'">
+            الصف الثاني الثانوي
+        </a>
+        <a href="#" class="grade-button animate__animated animate__fadeInUp" style="animation-delay: 0.4s" onclick="window.location.href='THIRD_GRADE_TEST_LINK'">
+            الصف الثالث الثانوي
+        </a>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>  social media  </h3>
+                <p>  تابع صفحاتنا علي السوشيال ميديا عشان يوصلك كل جديد  </p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=100064048811580#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.youtube.com/@Gelvano_ph12" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="tests.html"><i class="fas fa-file-alt"></i> امتحانات اونلاين</a></li>
+                    <li><a href="media.html"><i class="fas fa-play-circle"></i> ابدأ مذاكرة</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>تواصل مع تيم GELVANO</h3>
+                <p><i class="fab fa-whatsapp"></i> واتساب: 01070425779</p>  
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة © 2025 - تم النشر بواسطة   team Gelvano </p>
+            </div>
+        </div>
+    </footer>
+     </div>
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+    <script src="scriptblock.js"></script>
+    <script src="checkCode.js?v=3" defer></script>
+</body>
+</html> 

@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GELVANO ADMIN PANEL</title>
+  <link rel="icon" type="image/png" href="assets/6546847867645351321321354564687654545343.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+  :root{
+    --bg:#f3f4f6; --card:#fff; --ink:#111827; --muted:#6b7280;
+    --pri:#2563eb; --priH:#1d4ed8; --danger:#dc2626; --dangerH:#b91c1c; --ok:#16a34a;
+  }
+  *{box-sizing:border-box}
+  body{margin:0; font-family:Tajawal,Segoe UI,Arial; background:var(--bg); color:#111}
+  header{background:var(--ink); color:#fff; display:flex; justify-content:space-between; align-items:center; padding:12px 18px; position:sticky; top:0; z-index:10}
+  header h1{margin:0; font-size:18px}
+  .actions{display:flex; gap:12px; align-items:center}
+
+  .btn{cursor:pointer; border:none; border-radius:10px; padding:10px 14px; font-size:14px; background:var(--pri); color:#fff}
+  .btn:hover{background:var(--priH)}
+  .btn-danger{background:var(--danger)}
+  .btn-danger:hover{background:var(--dangerH)}
+  .chip{display:inline-flex; gap:8px; align-items:center; padding:6px 10px; border-radius:999px; background:#eef2ff; color:#3730a3; font-size:12px}
+
+  .container{max-width:1050px; margin:20px auto; background:var(--card); padding:20px; border-radius:16px; box-shadow:0 8px 30px rgba(0,0,0,.08)}
+  .toolbar{display:flex; gap:10px; margin-bottom:14px; flex-wrap:wrap}
+  .search{flex:1; padding:12px; border:1px solid #e5e7eb; border-radius:10px; font-size:14px; width:200px; transition:.3s}
+  .search:focus{width:100%}
+
+  .stats{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:12px}
+  .stat{background:#f3f4f6; padding:6px 10px; border-radius:999px; cursor:pointer; font-size:13px}
+  .stat.active{outline:2px solid var(--ink); background:#fff}
+
+  .code-item{display:flex; justify-content:space-between; align-items:center; gap:12px; background:#fafafa; border:1px solid #e5e7eb; border-radius:14px; padding:12px 14px; margin-bottom:10px}
+  .left{display:flex; gap:12px; align-items:flex-start}
+  .badge{background:var(--ink); color:#fff; font-size:12px; padding:4px 8px; border-radius:999px; height:24px; display:inline-flex; align-items:center}
+  .meta{display:flex; flex-direction:column; gap:4px}
+  .muted{color:var(--muted); font-size:12px}
+  .ok{color:var(--ok); font-weight:700}
+  .copy-btn{background:#e5e7eb; color:#111; border-radius:10px; padding:8px 10px}
+  .copy-btn.copied{background:#d1fae5}
+  .codes-scroll { max-height: 420px; overflow-y: auto; }
+  .copy-btn.copied::after { content: " ✔"; color: #16a34a; font-weight: bold; margin-right: 4px; font-size: 15px; }
+  .lesson-row { display: flex; gap: 10px; align-items: center; margin-bottom: 10px; }
+  .lesson-select { min-width: 120px; padding: 10px; border-radius: 8px; font-size: 15px; }
+  .lesson-name-input { width: 120px; padding: 10px; border-radius: 8px; font-size: 15px; }
+  .lesson-code-input { width: 90px; padding: 10px; border-radius: 8px; font-size: 15px; }
+  .lesson-delete-btn { background: var(--danger); color: #fff; border-radius: 8px; padding: 6px 12px; border: none; cursor: pointer; }
+  .lesson-delete-btn:hover { background: var(--dangerH); }
+
+  .notif-wrap{position:relative}
+  .notif-count{position:absolute; top:-6px; right:-6px; background:#ef4444; color:#fff; font-size:12px; padding:2px 6px; border-radius:999px; display:none}
+  .notif-box{position:absolute; top:44px; right:0; width:320px; background:#fff; border:1px solid #ddd; border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,.15); display:none; overflow:hidden}
+  .notif-box header{background:#f9fafb; color:#111; padding:10px 12px; font-weight:700; font-size:14px}
+  .notif-list{max-height:320px; overflow:auto; list-style:none; margin:0; padding:0}
+  .notif-list li{padding:10px 12px; border-bottom:1px solid #eee; font-size:13px; color:#111; background:#fff;}
+  .empty{padding:14px; text-align:center; color:var(--muted)}
+
+  #clerk-signin-container { max-width:340px;margin:40px auto 0; }
+  #clerk-signin-container .cl-internal-b3fm6y { direction: ltr; }
+  #admin-block-msg {color:#d93025; font-weight:bold; margin:30px auto 0; text-align:center;}
+  </style>
+</head>
+<body>
+<header>
+  <div class="actions">
+    <div id="notifWrap" class="notif-wrap" style="display:none">
+      <button class="btn" id="notifBtn" title="الإشعارات"><i class="fa-solid fa-bell"></i></button>
+      <span id="notifCount" class="notif-count">0</span>
+      <div id="notifBox" class="notif-box">
+        <header style="display:flex;justify-content:space-between;align-items:center">
+          <span>الإشعارات</span>
+          <button id="clearNotifsBtn" class="btn-danger" style="font-size:12px;padding:4px 10px">حذف الكل</button>
+        </header>
+        <ul id="notifList" class="notif-list"></ul>
+        <div id="notifEmpty" class="empty" style="display:none">لا توجد إشعارات</div>
+      </div>
+    </div>
+    <button id="logoutBtn" class="btn-danger" style="display:none" onclick="logout()">تسجيل خروج</button>
+  </div>
+  <h1>GELVANO ADMIN PANEL</h1>
+</header>
+
+<!-- أزرار التنقل بين السيكشنات (أضفها داخل #panel وليس خارجها) -->
+<div id="sectionTabs" style="display:none;justify-content:center;gap:18px;margin:18px 0;">
+  <button id="showLessonsBtn" class="btn" style="font-size:16px;">أكواد الحصص</button>
+  <button id="showMonthsBtn" class="btn" style="font-size:16px;">أكواد الشهر</button>
+</div>
+
+<!-- تسجيل الدخول -->
+<div class="container" id="loginBox">
+  <h3>تسجيل دخول الأدمن</h3>
+  <div class="toolbar" style="margin-top:12px">
+    <input id="adminEmail" type="email" class="search" placeholder="البريد الإلكتروني">
+    <input id="adminPass"  type="password" class="search" placeholder="كلمة المرور">
+    <button type="button" class="btn" onclick="adminLogin()">دخول</button>
+  </div>
+  <div id="loginMsg" class="muted" style="color:#d93025"></div>
+</div>
+
+<!-- لوحة التحكم -->
+<div class="container" id="panel" style="display:none">
+  <div style="display:flex; gap:32px; flex-wrap:wrap;">
+    <!-- سكشن أكواد الحصة -->
+    <section id="lesson-codes-section" style="flex:1; min-width:340px; display:block;">
+      <h2 style="color:#dc2626;margin-bottom:18px;">أكواد الحصة</h2>
+      <div class="toolbar lesson-row">
+        <input id="lessonSearchInput" type="text" class="search" placeholder="بحث عن كود أو مستخدم أو إيميل">
+        <select id="lessonSelect" class="lesson-select"></select>
+        <input id="lessonCodeInput" type="text" maxlength="10" class="lesson-code-input" placeholder="كود الحصة">
+        <button class="btn" onclick="addLessonCode()"><i class="fa-solid fa-plus"></i> إضافة كود للحصة</button>
+        <input id="lessonNameInput" type="text" maxlength="20" class="lesson-name-input" placeholder="اسم الحصة الجديد">
+        <button class="btn" onclick="addLessonName()"><i class="fa-solid fa-plus"></i> إضافة اسم حصة</button>
+        <button class="lesson-delete-btn" onclick="deleteLessonName()"><i class="fa-solid fa-trash"></i> حذف اسم الحصة</button>
+        <button class="btn-danger" onclick="deleteAllLessonCodes()"><i class="fa-solid fa-trash"></i> حذف كل أكواد الحصة</button>
+      </div>
+      <div id="lesson-list" class="codes-scroll"></div>
+    </section>
+    <!-- سكشن أكواد الشهر -->
+    <section id="month-codes-section" style="flex:1; min-width:340px; display:none;">
+      <h2 style="color:#2563eb;margin-bottom:18px;">أكواد الشهر</h2>
+      <div class="toolbar">
+        <input id="monthSearchInput" type="text" class="search" placeholder="بحث عن كود أو مستخدم أو إيميل" style="width:220px;">
+        <input id="customMonthCodeInput" type="text" maxlength="10" style="width:90px;padding:10px;border-radius:8px;font-size:15px;" placeholder="كود مخصص">
+        <button class="btn" onclick="addMonthCode()"><i class="fa-solid fa-plus"></i> إضافة كود شهر</button>
+        <button class="btn-danger" onclick="deleteAllMonthCodes()"><i class="fa-solid fa-trash"></i> حذف كل أكواد الشهر</button>
+        <button class="btn" onclick="exportMonthData()"><i class="fa-solid fa-download"></i> تصدير</button>
+        <input type="file" id="importMonthFile" style="display:none" onchange="importMonthData(event)">
+        <button class="btn" onclick="document.getElementById('importMonthFile').click()"><i class="fa-solid fa-upload"></i> استيراد</button>
+      </div>
+      <div id="month-list" class="codes-scroll"></div>
+    </section>
+  </div>
+</div>
+
+<script>
+const API_URL   = "https://68a25cb6c5a31eb7bb1ccafd.mockapi.io/codes";
+const NOTIF_URL = "https://68a25cb6c5a31eb7bb1ccafd.mockapi.io/notifications";
+const ADMIN_EMAIL="gelvano@gmail.com";
+const ADMIN_PASS ="gelvano2468gelvano";
+const THIRTY_DAYS = 30*24*60*60*1000;
+
+let username = localStorage.getItem("username");
+// اجعل القيمة الأساسية للبريد الإلكتروني وليس اسم المستخدم
+let userEmail = localStorage.getItem("userEmail");
+if(!userEmail){
+  userEmail = "غير معروف";
+  localStorage.setItem("userEmail", userEmail);
+}
+
+let codes=[], currentFilter='all', notifTimer=null;
+const $ = s=>document.querySelector(s);
+
+const ALLOWED_ADMIN_IDS = [
+  "user_31QhSSCvkeRv1c3gi5vjCuNucfn",
+  "user_31N3a3HFvZEHNLevdtpR9o2NyIs"
+];
+
+
+const ENCODED_ADMIN_EMAIL = "Z2VsdmFub0BnbWFpbC5jb20=";
+const ENCODED_ADMIN_PASS  = "Z2VsdmFubzI0NjhnZWx2YW5v";
+
+function decodeBase64(str) {
+  try {
+    return decodeURIComponent(escape(atob(str)));
+  } catch(e) {
+    return "";
+  }
+}
+
+const LOGIN_KEY = "adminLogged";
+const LOGIN_TIME_KEY = "adminLoginTime";
+const LOGIN_TIMEOUT = 60 * 60 * 1000; // ساعة واحدة
+
+function isAdminLoggedIn() {
+  const logged = localStorage.getItem(LOGIN_KEY);
+  const time = parseInt(localStorage.getItem(LOGIN_TIME_KEY) || "0");
+  if (!logged || !time) return false;
+  if (Date.now() - time > LOGIN_TIMEOUT) {
+    logout();
+    return false;
+  }
+  return true;
+}
+
+
+function adminLogin(){
+  const email = (document.getElementById("adminEmail")?.value || "").trim();
+  const pass  = (document.getElementById("adminPass")?.value || "").trim();
+  const msgEl = document.getElementById("loginMsg");
+  msgEl.textContent = "";
+
+  const adminEmail = decodeBase64(ENCODED_ADMIN_EMAIL);
+  const adminPass  = decodeBase64(ENCODED_ADMIN_PASS);
+
+  if(!email || !pass){
+    msgEl.textContent = "يرجى إدخال البريد وكلمة المرور.";
+    return;
+  }
+
+  if(email === adminEmail && pass === adminPass){
+    localStorage.setItem(LOGIN_KEY,"1");
+    localStorage.setItem(LOGIN_TIME_KEY, Date.now().toString());
+    showPanel();
+    msgEl.textContent = "";
+  }else{
+    msgEl.textContent = "❌ بيانات الدخول غير صحيحة أو مصرح للادمن فقط الدخول.";
+  }
+}
+
+function logout(){ 
+  localStorage.removeItem(LOGIN_KEY);
+  localStorage.removeItem(LOGIN_TIME_KEY);
+  location.reload();
+}
+
+function showPanel(){
+  $("#loginBox").style.display="none";
+  $("#panel").style.display="block";
+  $("#logoutBtn").style.display="inline-block";
+  $("#notifWrap").style.display="inline-block";
+  document.getElementById("sectionTabs").style.display = "flex";
+  document.getElementById("lesson-codes-section").style.display = "block";
+  document.getElementById("month-codes-section").style.display = "none";
+  bindNotifsUI();
+  refreshAll();
+  if (notifTimer) clearInterval(notifTimer);
+  notifTimer = setInterval(fetchNotifications, 10000);
+}
+
+window.onload = function() {
+  if (isAdminLoggedIn()) {
+    showPanel();
+    return;
+  }
+  document.getElementById("loginBox").style.display = "block";
+  document.getElementById("panel").style.display = "none";
+};
+
+// إشعار عند محاولة استخدام كود (شهر أو حصة)
+async function notifyAdminTry(code, type, email, msg) {
+  try {
+    await fetch(NOTIF_URL, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify({
+        message: msg,
+        code,
+        userEmail: email,
+        type,
+        createdAt: new Date().toISOString()
+      })
+    });
+  } catch(e){}
+}
+
+// أكواد الشهر (API الشهر)
+const MONTH_API_URL = "https://68a25cb6c5a31eb7bb1ccafd.mockapi.io/codes";
+let monthCodes = [];
+let monthFilter = 'all';
+let monthSearch = '';
+document.getElementById("monthSearchInput").oninput = function() {
+  monthSearch = this.value.trim().toLowerCase();
+  renderMonthCodes();
+};
+function setMonthFilter(f){
+  monthFilter = f;
+  renderMonthCodes();
+}
+async function fetchMonthCodes(){
+  try{
+    const res = await fetch(MONTH_API_URL);
+    const data = await res.json();
+    // حذف الأكواد المنتهية تلقائياً من قاعدة البيانات
+    const now = Date.now();
+    for(const c of (Array.isArray(data)?data:[])){
+      if(c.createdAt && (now - new Date(c.createdAt).getTime()) >= 30*24*60*60*1000){
+        await fetch(`${MONTH_API_URL}/${c.id}`,{method:"DELETE"});
+      }
+    }
+    // جلب الأكواد بعد الحذف
+    const res2 = await fetch(MONTH_API_URL);
+    const data2 = await res2.json();
+    monthCodes = Array.isArray(data2)
+      ? data2.filter(c => !c.createdAt || (now - new Date(c.createdAt).getTime()) < 30*24*60*60*1000)
+      : [];
+    renderMonthCodes();
+  }catch(e){ monthCodes = []; renderMonthCodes(); }
+}
+function renderMonthCodes(){
+  const list = document.getElementById("month-list");
+  list.innerHTML = "";
+  // أزرار الفلترة أعلى الأكواد
+  list.innerHTML += `
+    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:18px;">
+      <button class="stat${monthFilter==='all'?' active':''}" onclick="setMonthFilter('all')">الكل</button>
+      <button class="stat${monthFilter==='used'?' active':''}" onclick="setMonthFilter('used')">المستخدمة</button>
+      <button class="stat${monthFilter==='unused'?' active':''}" onclick="setMonthFilter('unused')">غير المستخدمة</button>
+    </div>
+  `;
+  let view = [...monthCodes];
+  if(monthFilter==='used') view = view.filter(c=>c.isUsed);
+  if(monthFilter==='unused') view = view.filter(c=>!c.isUsed);
+  if(monthSearch){
+    view = view.filter(c =>
+      (c.code||"").toLowerCase().includes(monthSearch) ||
+      (c.username||"").toLowerCase().includes(monthSearch) ||
+      (c.userEmail||"").toLowerCase().includes(monthSearch)
+    );
+  }
+  if(view.length===0){
+    list.innerHTML += '<div style="color:#dc2626;text-align:center;padding:22px;">لا توجد أكواد بعد.</div>';
+    return;
+  }
+  view.forEach((c,i)=>{
+    const userEmail = c.userEmail || "غير معروف";
+    const username = c.username || "غير معروف";
+    const createdAt = c.createdAt ? new Date(c.createdAt).toLocaleString() : "-";
+    const used = c.isUsed ? `<span class="ok">مستخدم</span>` : `<span style="color:#dc2626;font-weight:bold">غير مستخدم</span>`;
+    list.innerHTML += `
+      <div style="background:#fff;border-radius:12px;box-shadow:0 2px 8px #0001;padding:16px;margin-bottom:14px;display:flex;align-items:center;gap:18px;">
+        <span style="background:#ffd700;color:#222;padding:6px 14px;border-radius:8px;font-weight:bold;font-size:1.1rem;">${c.code}</span>
+        <div style="flex:1;">
+          <div style="font-size:1rem;font-weight:bold;">${used}</div>
+          <div style="color:#888;font-size:0.95rem;">${username} <span style="color:#3498db">${userEmail}</span></div>
+          <div style="color:#aaa;font-size:0.9rem;">${createdAt}</div>
+        </div>
+        <button class="copy-btn" onclick="copyCodeBtn(this,'${c.code}')" style="background:#e5e7eb;color:#111;border-radius:8px;padding:8px 12px;border:none;cursor:pointer;"><i class="fa-regular fa-copy"></i> نسخ</button>
+        <button class="btn-danger" title="حذف" onclick="deleteMonthCode('${c.id}')" style="padding:8px 12px;"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    `;
+  });
+}
+
+// أكواد الحصة (API الحصص)
+const LESSON_API_URL      = "https://68a3fbe0c123272fb9b0ee15.mockapi.io/gelvano";
+const LESSON_NAMES_API_URL= "https://68a4180ac123272fb9b14b0b.mockapi.io/lessons";
+let lessonCodes = [];
+let lessonNames = [];
+let selectedLessonName = localStorage.getItem("selectedLessonName") || "";
+let lessonSearch = '';
+let lessonFilter = 'all';
+
+document.getElementById("lessonSearchInput").oninput = function() {
+  lessonSearch = this.value.trim().toLowerCase();
+  renderLessonCodes();
+};
+function setLessonFilter(f){
+  lessonFilter = f;
+  renderLessonCodes();
+}
+function updateLessonSelectOptions() {
+  const select = document.getElementById("lessonSelect");
+  select.innerHTML = lessonNames.length
+    ? lessonNames.map(n => `<option value="${n}">${n}</option>`).join("")
+    : '<option value="">لا توجد حصص بعد</option>';
+  if (!lessonNames.includes(selectedLessonName)) selectedLessonName = lessonNames[0] || "";
+  select.value = selectedLessonName;
+}
+
+document.getElementById("lessonSelect").onchange = function() {
+  selectedLessonName = this.value;
+  localStorage.setItem("selectedLessonName", selectedLessonName);
+  renderLessonCodes();
+};
+
+// جلب أسماء الحصص من API منفصل
+async function fetchLessonNames() {
+  try {
+    const res = await fetch(LESSON_NAMES_API_URL);
+    const data = await res.json();
+    lessonNames = Array.isArray(data) ? data.map(x => x.name).filter(Boolean) : [];
+    updateLessonSelectOptions();
+  } catch(e) { lessonNames = []; updateLessonSelectOptions(); }
+}
+
+async function fetchLessonCodes() {
+  try {
+    const res = await fetch(LESSON_API_URL);
+    const data = await res.json();
+    lessonCodes = Array.isArray(data) ? data : [];
+    renderLessonCodes();
+  } catch(e) { lessonCodes = []; renderLessonCodes(); }
+}
+
+function renderLessonCodes() {
+  const list = document.getElementById("lesson-list");
+  list.innerHTML = "";
+  // أزرار الفلترة أعلى الأكواد
+  list.innerHTML += `
+    <div style="display:flex;gap:10px;justify-content:center;margin-bottom:18px;">
+      <button class="stat${lessonFilter==='all'?' active':''}" onclick="setLessonFilter('all')">الكل</button>
+      <button class="stat${lessonFilter==='used'?' active':''}" onclick="setLessonFilter('used')">المستخدمة</button>
+      <button class="stat${lessonFilter==='unused'?' active':''}" onclick="setLessonFilter('unused')">غير المستخدمة</button>
+    </div>
+  `;
+  let view = [...lessonCodes];
+  if(selectedLessonName) view = view.filter(c => c.lessonName === selectedLessonName);
+  if(lessonFilter==='used') view = view.filter(c=>c.isUsed);
+  if(lessonFilter==='unused') view = view.filter(c=>!c.isUsed);
+  if(lessonSearch){
+    view = view.filter(c =>
+      (c.code||"").toLowerCase().includes(lessonSearch) ||
+      (c.username||"").toLowerCase().includes(lessonSearch) ||
+      (c.userEmail||"").toLowerCase().includes(lessonSearch)
+    );
+  }
+  if(view.length===0){
+    list.innerHTML += '<div style="color:#dc2626;text-align:center;padding:22px;">لا توجد أكواد لهذه الحصة.</div>';
+    return;
+  }
+  view.forEach((c,i)=>{
+    const userEmail = c.userEmail || "غير معروف";
+    const username = c.username || "غير معروف";
+    const lessonName = c.lessonName || "-";
+    const createdAt = c.createdAt ? new Date(c.createdAt).toLocaleString() : "-";
+    const used = c.isUsed ? `<span class="ok">مستخدم</span>` : `<span style="color:#dc2626;font-weight:bold">غير مستخدم</span>`;
+    list.innerHTML += `
+      <div style="background:#fff;border-radius:12px;box-shadow:0 2px 8px #0001;padding:16px;margin-bottom:14px;display:flex;align-items:center;gap:18px;">
+        <span style="background:#ffd700;color:#222;padding:6px 14px;border-radius:8px;font-weight:bold;font-size:1.1rem;">${c.code}</span>
+        <div style="flex:1;">
+          <div style="font-size:1rem;font-weight:bold;">${used}</div>
+          <div style="color:#888;font-size:0.95rem;">${username} <span style="color:#3498db">${userEmail}</span></div>
+          <div style="color:#aaa;font-size:0.9rem;">${createdAt}</div>
+          <div style="color:#2563eb;font-size:0.95rem;">اسم الحصة: ${lessonName}</div>
+        </div>
+        <button class="copy-btn" onclick="copyCodeBtn(this,'${c.code}')" style="background:#e5e7eb;color:#111;border-radius:8px;padding:8px 12px;border:none;cursor:pointer;"><i class="fa-regular fa-copy"></i> نسخ</button>
+        <button class="btn-danger" title="حذف" onclick="deleteLessonCode('${c.id}')" style="padding:8px 12px;"><i class="fa-solid fa-trash"></i></button>
+      </div>
+    `;
+  });
+}
+
+// زر حذف جميع أكواد الشهر
+async function deleteAllMonthCodes(){
+  if(!confirm("هل أنت متأكد من حذف جميع أكواد الشهر؟")) return;
+  try{
+    const res = await fetch(MONTH_API_URL);
+    const data = await res.json();
+    for(const c of (data||[])){
+      await fetch(`${MONTH_API_URL}/${c.id}`,{method:"DELETE"});
+    }
+    await fetchMonthCodes();
+  }catch(e){console.error(e);}
+}
+
+// زر حذف جميع أكواد الحصة: احذف فقط الأكواد المرتبطة بالحصة المختارة وليس كل الأكواد
+async function deleteAllLessonCodes(){
+  if(!selectedLessonName) return alert("حدد اسم الحصة أولاً!");
+  if(!confirm(`هل أنت متأكد من حذف جميع أكواد الحصة (${selectedLessonName}) ؟`)) return;
+  try{
+    const res = await fetch(LESSON_API_URL);
+    const data = await res.json();
+    for(const c of (data||[])){
+      if(c.lessonName === selectedLessonName){
+        await fetch(`${LESSON_API_URL}/${c.id}`,{method:"DELETE"});
+      }
+    }
+    await fetchLessonCodes();
+  }catch(e){console.error(e);}
+}
+
+// زر تصدير أكواد الشهر
+function exportMonthData(){
+  const data = JSON.stringify(monthCodes,null,2);
+  const blob = new Blob([data],{type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = "month_codes.json";
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+// زر استيراد أكواد الشهر
+function importMonthData(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = async function(e){
+    try{
+      const arr = JSON.parse(e.target.result);
+      if(Array.isArray(arr)){
+        for(const c of arr){
+          await fetch(MONTH_API_URL,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(c)
+          });
+        }
+        await fetchMonthCodes();
+      }
+    }catch(e){alert("ملف غير صالح");}
+  };
+  reader.readAsText(file);
+}
+
+// زر تصدير أكواد الحصة
+function exportLessonData(){
+  const data = JSON.stringify(lessonCodes,null,2);
+  const blob = new Blob([data],{type:"application/json"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = "lesson_codes.json";
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+}
+
+// زر استيراد أكواد الحصة
+function importLessonData(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = async function(e){
+    try{
+      const arr = JSON.parse(e.target.result);
+      if(Array.isArray(arr)){
+        for(const c of arr){
+          await fetch(LESSON_API_URL,{
+            method:"POST",
+            headers:{"Content-Type":"application/json"},
+            body:JSON.stringify(c)
+          });
+        }
+        await fetchLessonCodes();
+      }
+    }catch(e){alert("ملف غير صالح");}
+  };
+  reader.readAsText(file);
+}
+
+// زر إضافة اسم الحصة
+async function addLessonName() {
+  const lessonName = (document.getElementById("lessonNameInput")?.value||"").trim();
+  if(!lessonName) return alert("أدخل اسم الحصة أولاً!");
+  try {
+    await fetch(LESSON_NAMES_API_URL, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({ name: lessonName })
+    });
+    document.getElementById("lessonNameInput").value = "";
+    await fetchLessonNames();
+  } catch(e){
+    alert("حدث خطأ أثناء إضافة اسم الحصة");
+  }
+}
+
+function copyCodeBtn(btn, code){
+  navigator.clipboard.writeText(code);
+  btn.classList.add("copied");
+  btn.innerHTML = '<i class="fa-regular fa-copy"></i> نسخ <span style="color:#16a34a;font-weight:bold;">✔</span>';
+  setTimeout(()=>{
+    btn.classList.remove("copied");
+    btn.innerHTML = '<i class="fa-regular fa-copy"></i> نسخ';
+  },1200);
+}
+
+// عند الدخول للوحة التحكم: جلب الأكواد وأسماء الحصص
+async function refreshAll(){
+  await fetchLessonNames();
+  await fetchLessonCodes();
+  await fetchMonthCodes();
+  await fetchNotifications();
+}
+
+/* ===== إشعارات ===== */
+function bindNotifsUI(){
+  const btn = $("#notifBtn"), box=$("#notifBox");
+  btn.onclick = ()=>{
+    box.style.display = box.style.display==="block"?"none":"block";
+    if(box.style.display==="block"){
+      localStorage.setItem("lastNotifSeenAt", Date.now().toString());
+      $("#notifCount").style.display="none";
+    }
+  };
+  document.addEventListener('click', (e)=>{
+    if(!$("#notifWrap").contains(e.target)) $("#notifBox").style.display="none";
+  });
+  // زر حذف جميع الإشعارات
+  const clearBtn = $("#clearNotifsBtn");
+  if(clearBtn){
+    clearBtn.onclick = async ()=>{
+      if(!confirm("هل أنت متأكد من حذف جميع الإشعارات؟")) return;
+      try{
+        const res = await fetch(NOTIF_URL);
+        const notifs = await res.json();
+        await Promise.all((notifs||[]).map(n=>fetch(`${NOTIF_URL}/${n.id}`,{method:"DELETE"})));
+        fetchNotifications();
+      }catch(e){alert("حدث خطأ أثناء الحذف");}
+    };
+  }
+}
+
+// عرض الإشعارات بشكل واضح
+async function fetchNotifications(){
+  try{
+    const res = await fetch(NOTIF_URL);
+    const notifs = await res.json() || [];
+    notifs.sort((a,b)=> new Date(b.createdAt)-new Date(a.createdAt));
+
+    const list=$("#notifList"), empty=$("#notifEmpty");
+    list.innerHTML="";
+    if(notifs.length===0){ empty.style.display="block"; }
+    else{
+      empty.style.display="none";
+      for (let idx = 0; idx < notifs.length; idx++) {
+        const n = notifs[idx];
+        if(n.message && n.message.includes("حاول هذا الشخص الدخول بكود مستخدم بالفعل")){
+          const code = (n.code || "-").toUpperCase();
+          // جلب بيانات المالك الأول من الأكواد أو من API
+          const owner = await getOwnerInfoByCodeAsync(code);
+
+          const attemptName = n.attemptUsername || "غير معروف";
+          const attemptEmail = n.attemptEmail || "غير معروف";
+
+          const boxHtml = `
+            <div style="background:#222; color:#fff; border-radius:10px; padding:12px 14px; margin-bottom:8px; box-shadow:0 2px 12px rgba(0,0,0,.12);">
+              <div style="font-size:15px; font-weight:bold; margin-bottom:4px;">
+                الكود: <span style="background:#fff; color:#222; padding:2px 10px; border-radius:8px; font-weight:bold; font-size:16px;">${code}</span>
+              </div>
+              <div style="margin-bottom:6px;">
+                <span style="font-weight:700;">المالك الأول للكود:</span> <span style="font-size:15px;">${owner.name}</span>
+                <br>
+                <span style="color:#e0e0e0; font-size:13px;">الإيميل: ${owner.email}</span>
+                <br>
+                <span style="color:#e0e0e0; font-size:13px;">تاريخ التسجيل: ${owner.createdAt}</span>
+              </div>
+              <hr style="border-color:#444; margin:8px 0;">
+              <div>
+                <span style="font-weight:700;">المستخدم الذى حاول الدخول:</span> <span style="font-size:15px;">${attemptName}</span>
+                <br>
+                <span style="color:#e0e0e0; font-size:13px;">الإيميل: ${attemptEmail}</span>
+              </div>
+              <div style="margin-top:8px; color:#ffd700; font-size:13px;">${n.message}</div>
+              <div style="margin-top:8px; color:#ccc; font-size:12px;">${new Date(n.createdAt).toLocaleString()}</div>
+              <button onclick="showNotifDetails(${idx})" style="margin-top:8px;" class="btn">تفاصيل أكثر</button>
+              <button onclick="copyNotifDetails(${idx})" style="margin-top:8px;margin-right:8px;" class="btn">نسخ التفاصيل</button>
+            </div>
+          `;
+          const li = document.createElement('li');
+          li.innerHTML = boxHtml;
+          list.appendChild(li);
+          continue;
+        }
+        // إشعار مخصص (محاولة خاطئة أو تسجيل ناجح) بشكل جميل
+        if(n.message){
+          const codeStyle = n.highlight
+            ? 'background:#111;color:#fff;padding:2px 10px;border-radius:8px;display:inline-block;margin:0 4px;font-weight:bold'
+            : 'background:#f3f4f6;color:#111;padding:2px 10px;border-radius:8px;display:inline-block;margin:0 4px;';
+          const codeHtml = n.highlight
+            ? `<span style="${codeStyle}">✅ ${n.code}</span>`
+            : `<span style="${codeStyle}">${n.code}</span>`;
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <div style="background:#f9fafb; border-radius:8px; padding:10px 12px; margin-bottom:6px; box-shadow:0 1px 6px rgba(0,0,0,.07);">
+              <div>
+                <span style="font-weight:bold;color:#2563eb">${n.username || "غير معروف"}</span>
+                <span style="color:#6b7280; font-size:12px; margin-right:8px;">${n.userEmail || "غير معروف"}</span>
+              </div>
+              <div style="margin:6px 0">
+                ${n.message} ${codeHtml}
+              </div>
+              <div class="muted" style="margin-top:4px">${new Date(n.createdAt).toLocaleString()}</div>
+              <button onclick="copyNotifDetails(${idx})" style="margin-top:8px;" class="btn">نسخ التفاصيل</button>
+            </div>
+          `;
+          list.appendChild(li);
+          continue;
+        }
+        // ...existing code for other notifications...
+      };
+
+      window._allNotifs = notifs;
+    }
+    const lastSeen = parseInt(localStorage.getItem("lastNotifSeenAt")||"0");
+    const newCount = notifs.filter(n=> new Date(n.createdAt).getTime() > lastSeen).length;
+    const badge = $("#notifCount");
+    if(newCount>0){ badge.textContent=newCount; badge.style.display="inline-block"; }
+    else{ badge.style.display="none"; }
+  }catch(e){ console.error(e); }
+}
+
+// دالة تجيب بيانات المالك الأول للكود من الأكواد أو من mockapi.io مباشرة إذا لم يوجد محلياً
+async function getOwnerInfoByCodeAsync(code) {
+  if (!code) return { name: "غير معروف", email: "غير معروف", createdAt: "-" };
+  code = code.toUpperCase();
+  // ابحث محلياً أولاً
+  if (Array.isArray(window.codes)) {
+    const c = window.codes.find(x => (x.code || "").toUpperCase() === code);
+    if (c) {
+      return {
+        name: c.username || "غير معروف",
+        email: c.userEmail || "غير معروف",
+        createdAt: c.createdAt ? new Date(c.createdAt).toLocaleString() : "-"
+      };
+    }
+  }
+  // إذا لم يوجد محلياً، جلب من mockapi.io مباشرة
+  try {
+    const res = await fetch("https://68a25cb6c5a31eb7bb1ccafd.mockapi.io/codes");
+    const arr = await res.json();
+    if (Array.isArray(arr)) {
+      const c = arr.find(x => (x.code || "").toUpperCase() === code);
+      if (c) {
+        return {
+          name: c.username || "غير معروف",
+          email: c.userEmail || "غير معروف",
+          createdAt: c.createdAt ? new Date(c.createdAt).toLocaleString() : "-"
+        };
+      }
+    }
+  } catch(e){}
+  return { name: "غير معروف", email: "غير معروف", createdAt: "-" };
+}
+
+// عدل copyNotifDetails و showNotifDetails ليكونا async ويستخدما getOwnerInfoByCodeAsync
+async function copyNotifDetails(idx){
+  const n = window._allNotifs?.[idx];
+  if(!n) return;
+  const code = (n.code || "-").toUpperCase();
+  const owner = await getOwnerInfoByCodeAsync(code);
+  const attemptName = n.attemptUsername || "غير معروف";
+  const attemptEmail = n.attemptEmail || "غير معروف";
+  let text = "";
+  if(n.message && n.message.includes("حاول هذا الشخص الدخول بكود مستخدم بالفعل")){
+    text = `الكود: ${code}\nالمالك الأول للكود: ${owner.name}\nإيميل المالك الأول: ${owner.email}\nتاريخ التسجيل: ${owner.createdAt}\nالمستخدم الذى حاول الدخول: ${attemptName}\nإيميله: ${attemptEmail}\n${n.message}\n${new Date(n.createdAt).toLocaleString()}`;
+  } else {
+    text = `الكود: ${n.code || "-"}\nالمستخدم: ${n.username || "غير معروف"}\nالإيميل: ${n.userEmail || "غير معروف"}\n${n.message}\n${new Date(n.createdAt).toLocaleString()}`;
+  }
+  navigator.clipboard.writeText(text);
+}
+
+async function showNotifDetails(idx){
+  const n = window._allNotifs?.[idx];
+  if(!n) return;
+  const code = (n.code || "-").toUpperCase();
+  const owner = await getOwnerInfoByCodeAsync(code);
+  const attemptName = n.attemptUsername || "غير معروف";
+  const attemptEmail = n.attemptEmail || "غير معروف";
+  let details = "";
+  if(n.message && n.message.includes("حاول هذا الشخص الدخول بكود مستخدم بالفعل")){
+    details = `
+      <div style="padding:18px;max-width:400px">
+        <h3 style="margin-top:0;color:#2563eb">تفاصيل محاولة الدخول بنفس الكود</h3>
+        <div><b>الكود:</b> <span style="font-family:monospace">${code}</span></div>
+        <div style="margin-bottom:8px"><b>المالك الأول:</b> ${owner.name}</div>
+        <div style="margin-bottom:8px"><b>إيميل المالك الأول:</b> ${owner.email}</div>
+        <div style="margin-bottom:8px"><b>تاريخ التسجيل:</b> ${owner.createdAt}</div>
+        <hr>
+        <div style="margin-bottom:8px"><b>المستخدم الذى حاول الدخول:</b> ${attemptName}</div>
+        <div style="margin-bottom:8px"><b>إيميله:</b> ${attemptEmail}</div>
+        <div style="margin-bottom:8px; color:#ffd700;">${n.message}</div>
+        <div style="margin-bottom:8px; color:#ccc;">${new Date(n.createdAt).toLocaleString()}</div>
+        <button onclick="closeNotifDetails()" style="margin-top:14px" class="btn">إغلاق</button>
+        <button onclick="copyNotifDetails(${idx})" style="margin-top:14px;margin-right:8px;" class="btn">نسخ التفاصيل</button>
+      </div>
+    `;
+  } else {
+    details = `
+      <div style="padding:18px;max-width:400px">
+        <h3 style="margin-top:0;color:#2563eb">تفاصيل الإشعار</h3>
+        <div><b>الكود:</b> ${n.code || "-"}</div>
+        <div><b>المستخدم:</b> ${n.username || "غير معروف"}</div>
+        <div><b>الإيميل:</b> ${n.userEmail || "غير معروف"}</div>
+        <div style="margin-bottom:8px;">${n.message}</div>
+        <div style="margin-bottom:8px; color:#ccc;">${new Date(n.createdAt).toLocaleString()}</div>
+        <button onclick="closeNotifDetails()" style="margin-top:14px" class="btn">إغلاق</button>
+        <button onclick="copyNotifDetails(${idx})" style="margin-top:14px;margin-right:8px;" class="btn">نسخ التفاصيل</button>
+      </div>
+    `;
+  }
+  let modal = document.createElement('div');
+  modal.id = "notifDetailsModal";
+  modal.style = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.25);display:flex;align-items:center;justify-content:center;z-index:9999";
+  modal.innerHTML = `<div style="background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,.18);">${details}</div>`;
+  document.body.appendChild(modal);
+}
+
+// زر الحظر (يرسل طلب للباك اند أو API خاص بالحظر)
+async function banUser(email, event){
+  event.stopPropagation();
+  if(!email || email==="غير معروف") return alert("لا يوجد إيميل صالح للحظر");
+  if(!confirm(`هل تريد حظر الحساب (${email})؟`)) return;
+  try{
+    // هنا يجب أن يكون لديك API خاص بالحظر في الباك اند
+    // مثال: await fetch("/api/ban-user", {method:"POST", body:JSON.stringify({email})});
+    alert(`تم إرسال طلب حظر الحساب (${email}) بنجاح (يرجى تنفيذ الحظر في الباك اند).`);
+  }catch(e){
+    alert("حدث خطأ أثناء الحظر");
+  }
+}
+
+// إصلاح زر التنقل بين أكواد الحصة وأكواد الشهر ليظهر القسم الصحيح ويجلب البيانات
+document.getElementById("showLessonsBtn").onclick = function() {
+  document.getElementById("lesson-codes-section").style.display = "block";
+  document.getElementById("month-codes-section").style.display = "none";
+  fetchLessonCodes();
+};
+
+document.getElementById("showMonthsBtn").onclick = function() {
+  document.getElementById("lesson-codes-section").style.display = "none";
+  document.getElementById("month-codes-section").style.display = "block";
+  fetchMonthCodes();
+};
+
+// زر تفاصيل الإشعار: إصلاح زر إغلاق ليعمل بشكل صحيح
+function closeNotifDetails() {
+  const modal = document.getElementById("notifDetailsModal");
+  if(modal) modal.remove();
+}
+
+// زر إضافة كود للحصة: إذا كتب المستخدم كود في الحقل يتم استخدامه، وإلا ينشئ كود عشوائي
+async function addLessonCode(){
+  if(!selectedLessonName) return alert("حدد اسم الحصة أولاً!");
+  let code = (document.getElementById("lessonCodeInput")?.value||"").trim().toUpperCase();
+  if(!code) code = Math.random().toString(36).substring(2,8).toUpperCase();
+  if(!/^[A-Z0-9]{4,10}$/.test(code)) return alert("الكود يجب أن يكون من 4 إلى 10 حروف أو أرقام.");
+  try {
+    await fetch(LESSON_API_URL, {
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        code,
+        isUsed:false,
+        userEmail:userEmail,
+        username:username,
+        lessonName: selectedLessonName,
+        createdAt:new Date().toISOString()
+      })
+    });
+    document.getElementById("lessonCodeInput").value = "";
+    await fetchLessonCodes();
+  } catch(e){
+    alert("حدث خطأ أثناء إضافة الكود");
+  }
+}
+
+// زر حذف كود الحصة ليعمل بشكل صحيح
+async function deleteLessonCode(id){
+  if(!confirm("هل تريد حذف هذا الكود؟")) return;
+  try{
+    await fetch(`${LESSON_API_URL}/${id}`,{method:"DELETE"});
+    await fetchLessonCodes();
+  }catch(e){alert("حدث خطأ أثناء حذف الكود");}
+}
+
+// إصلاح زر حذف كود الشهر ليعمل بشكل صحيح
+async function deleteMonthCode(id){
+  if(!confirm("هل تريد حذف هذا الكود؟")) return;
+  try{
+    await fetch(`${MONTH_API_URL}/${id}`,{method:"DELETE"});
+    await fetchMonthCodes();
+  }catch(e){alert("حدث خطأ أثناء حذف الكود");}
+}
+
+// إصلاح زر حذف اسم الحصة ليعمل بشكل صحيح ويحذف الأكواد المرتبطة بها
+async function deleteLessonName() {
+  if(!selectedLessonName) return alert("حدد اسم الحصة أولاً!");
+  if(!confirm(`هل تريد حذف اسم الحصة (${selectedLessonName}) وكل الأكواد المرتبطة بها؟`)) return;
+  try {
+    // حذف اسم الحصة من قاعدة بيانات أسماء الحصص
+    const res = await fetch(LESSON_NAMES_API_URL);
+    const data = await res.json();
+    const lessonObj = (data||[]).find(x => x.name === selectedLessonName);
+    if(lessonObj) await fetch(`${LESSON_NAMES_API_URL}/${lessonObj.id}`,{method:"DELETE"});
+    // حذف الأكواد المرتبطة بها من قاعدة بيانات الأكواد
+    const res2 = await fetch(LESSON_API_URL);
+    const codes = await res2.json();
+    for(const c of (codes||[])){
+      if(c.lessonName === selectedLessonName){
+        await fetch(`${LESSON_API_URL}/${c.id}`,{method:"DELETE"});
+      }
+    }
+    selectedLessonName = "";
+    localStorage.removeItem("selectedLessonName");
+    await fetchLessonNames();
+    await fetchLessonCodes();
+  } catch(e){
+    alert("حدث خطأ أثناء حذف اسم الحصة أو الأكواد المرتبطة بها");
+  }
+}
+
+// زر إضافة كود شهر (يعمل بكود مخصص أو عشوائي، بدون إرسال إشعار)
+async function addMonthCode(){
+  let code = (document.getElementById("customMonthCodeInput")?.value||"").trim().toUpperCase();
+  if(!code) code = Math.random().toString(36).substring(2,8).toUpperCase();
+  if(!/^[A-Z0-9]{4,10}$/.test(code)) return alert("الكود يجب أن يكون من 4 إلى 10 حروف أو أرقام.");
+  try{
+    await fetch(MONTH_API_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        code,
+        isUsed:false,
+        userEmail:userEmail,
+        username:username,
+        createdAt:new Date().toISOString()
+      })
+    });
+    document.getElementById("customMonthCodeInput").value = "";
+    await fetchMonthCodes();
+  }catch(e){alert("حدث خطأ أثناء إضافة الكود");}
+}
+</script>
+</body>
+</html>

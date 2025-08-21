@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملفات الصف الثالث الثانوي - gelvano</title>
+    <link rel="icon" type="image/png" href="assets/6546847867645351321321354564687654545343.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="access-code.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="access-code.js" defer></script>
+    <style>
+        .files-container {
+            max-width: 1200px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .subject-section {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .subject-section:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .subject-title {
+            color: var(--primary-red);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .subject-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-red);
+            border-radius: 2px;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+            justify-content: center;
+
+        }
+
+        .file-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .file-icon {
+            color: var(--primary-red);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-name {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-button {
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-lg);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .download-button:hover {
+            background-color: var(--light-red);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .download-button i {
+            font-size: 1.1rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: var(--border-radius-lg);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background-color: var(--primary-red);
+            transform: translateY(-2px);
+        }
+
+        .back-button i {
+            font-size: 1.1rem;
+        }
+    </style>
+    <script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_cHJvbXB0LWNoYW1vaXMtNDAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://prompt-chamois-40.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
+</script>
+</head>
+<body>
+    <div id="sign-in"></div>
+    <div id="main-content" style="display:none;">
+    <!-- Header with Logo -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html">
+                <img loading="lazy" src="assets/logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
+            </a>
+        </div>
+    </header>
+
+
+    <div class="files-container">
+        <!-- الاسئلة Section -->
+        <section class="subject-section animate__animated animate__fadeInUp">
+            <h2 class="subject-title">الاسئلة</h2>
+            <div class="files-grid">
+                <div class="file-card">
+                    <div class="file-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="file-name">الوحدة الأولى</div>
+                    <a href="files\الصف الثاني الثانوي\الفصل الثاني.pdf" class="download-button" data-type="file" data-content-id="second-grade-file-1">
+                        <i class="fas fa-download"></i>
+                        تحميل الملف
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- الملخصات Section -->
+        <section class="subject-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <h2 class="subject-title">الملخصات</h2>
+            <div class="files-grid">
+                <div class="file-card">
+                    <div class="file-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="file-name">الوحدة الأولى</div>
+                    <a href="https://example.com/summary2.pdf" class="download-button" data-type="file" data-content-id="second-grade-file-2">
+                        <i class="fas fa-download"></i>
+                        تحميل الملف
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+   <!-- Footer -->
+   <footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>  social media  </h3>
+            <p>  تابع صفحاتنا علي السوشيال ميديا عشان يوصلك كل جديد  </p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100064048811580#"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@Gelvano_ph12"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>روابط سريعة</h3>
+            <ul class="footer-links">
+                <li><a href="tests.html"><i class="fas fa-file-alt"></i> امتحانات اونلاين</a></li>
+                <li><a href="media.html"><i class="fas fa-play-circle"></i> ابدأ مذاكرة</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>تواصل مع تيم GELVANO</h3>
+            <p><i class="fab fa-whatsapp"></i> واتساب: 01070425779</p>  
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="copyright">
+            <p>جميع الحقوق محفوظة © 2025 - تم النشر بواسطة   team Gelvano </p>
+        </div>
+    </div>
+</footer>
+     </div>
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+    <script src="scriptblock.js"></script>
+    <script src="checkCode.js?v=3" defer></script>
+</body>
+</html>

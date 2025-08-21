@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>GELVANO VIDEOS</title>
+    <link rel="icon" type="image/png" href="assets/6546847867645351321321354564687654545343.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            margin: 0;
+            background: #f7f7f7;
+            font-family: Tahoma, Arial, sans-serif;
+            color: #111;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            background: #ff4d4d;
+            color: #fff;
+            padding: 18px 0 12px 0;
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            box-shadow: 0 2px 8px rgba(255,77,77,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+        }
+        .header-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+        }
+        .header-title {
+            flex: 1;
+            text-align: center;
+        }
+        .search-bar {
+            margin: 25px auto 10px auto;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            max-width: 500px;
+            position: relative;
+        }
+        .search-bar input {
+            width: 320px;
+            padding: 12px 16px 12px 38px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.2s;
+        }
+        .search-bar input:focus {
+            border: 1.5px solid #ff4d4d;
+        }
+        .search-bar .clear-x {
+            position: absolute;
+            left: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: #888;
+            font-size: 1.3rem;
+            cursor: pointer;
+            display: none;
+            z-index: 2;
+            padding: 0;
+            height: 28px;
+            width: 28px;
+            line-height: 1;
+        }
+        .search-bar button {
+            padding: 12px 22px;
+            border-radius: 8px;
+            border: none;
+            background: #ff4d4d;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+            position: relative;
+        }
+        .search-bar button:disabled {
+            background: #ffb3b3;
+            cursor: not-allowed;
+        }
+        .search-bar .loading-spinner {
+            border: 3px solid #fff;
+            border-top: 3px solid #ff4d4d;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            animation: spin 0.7s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-right: 6px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+        .videos-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 28px;
+            margin: 30px auto 40px auto;
+            max-width: 1200px;
+        }
+        .video-card {
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+            width: 320px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 18px 18px 22px 18px;
+            transition: transform 0.18s, box-shadow 0.18s;
+            position: relative;
+        }
+        .video-card:hover {
+            transform: translateY(-6px) scale(1.025);
+            box-shadow: 0 8px 24px rgba(255,77,77,0.13);
+        }
+        .video-thumb {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            background: #eee;
+        }
+        .video-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #111;
+            text-align: center;
+        }
+        .video-desc {
+            font-size: 0.98rem;
+            color: #444;
+            margin-bottom: 16px;
+            text-align: center;
+            min-height: 40px;
+        }
+        .video-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            width: 100%;
+        }
+        .video-actions a {
+            flex: 1;
+            padding: 10px 0;
+            border-radius: 7px;
+            background: #ff4d4d;
+            color: #fff;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: bold;
+            text-align: center;
+            transition: background 0.18s;
+        }
+        .video-actions a.files {
+            background: #3498db;
+        }
+        .video-actions a:hover {
+            background: #e63939;
+        }
+        .video-actions a.files:hover {
+            background: #217dbb;
+        }
+        .no-videos {
+            text-align: center;
+            color: #888;
+            font-size: 1.2rem;
+            margin-top: 40px;
+        }
+        footer {
+            margin-top: auto;
+            background: #fff;
+            border-top: 2px solid #eee;
+            padding: 22px 0 18px 0;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 18px;
+        }
+        .footer-logo {
+            width: 55px;
+            height: 55px;
+            object-fit: contain;
+            margin-bottom: 0;
+            margin-left: 10px;
+            margin-right: 10px;
+            display: inline-block;
+        }
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        .footer-title {
+            font-size: 1.15rem;
+            font-weight: bold;
+            color: #ff4d4d;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+        }
+        .footer-note {
+            color: #888;
+            font-size: 0.98rem;
+        }
+        @media (max-width: 700px) {
+            .videos-container {
+                gap: 18px;
+            }
+            .video-card {
+                width: 95vw;
+                max-width: 340px;
+            }
+            .search-bar input {
+                width: 60vw;
+                min-width: 120px;
+            }
+            footer {
+                flex-direction: column;
+                gap: 0;
+                align-items: center;
+            }
+            .footer-content {
+                align-items: center;
+            }
+        }
+    </style>
+    <script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_cHJvbXB0LWNoYW1vaXMtNDAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://prompt-chamois-40.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
+</script>
+</head>
+<body>
+    <header>
+        <img src="assets/logo.png" alt="Logo" class="header-logo" id="headerLogo" style="cursor:pointer;">
+        <span class="header-title" id="headerTitle" style="cursor:pointer;">GELVANO</span>
+    </header>
+    <div class="search-bar">
+        <div style="position:relative; display:flex; align-items:center;">
+            <input type="text" id="searchInput" placeholder="ابحث عن فيديو..." autocomplete="off" style="padding-left:38px;">
+            <button type="button" class="clear-x" id="clearX" title="مسح البحث" style="display:none; left:10px; right:auto;">×</button>
+        </div>
+        <button id="searchBtn">بحث</button>
+    </div>
+    <div class="videos-container" id="videosContainer">
+        <!-- سيتم توليد الفيديوهات هنا -->
+    </div>
+    <div class="no-videos" id="noVideos" style="display:none;">
+        لا توجد فيديوهات مطابقة لبحثك أو صفك الدراسي.<br>
+        <button id="showAllBtn" style="margin-top:15px;display:none;background:#ff4d4d;color:#fff;padding:8px 22px;border:none;border-radius:7px;font-size:1rem;cursor:pointer;">عرض كل الفيديوهات</button>
+    </div>
+    <footer>
+        <img src="assets/6546847867645351321321354564687654545343.png" alt="GELVANO" class="footer-logo">
+        <div class="footer-content">
+            <div class="footer-title">GELVANO VIDEOS</div>
+            <div class="footer-note">جميع الحقوق محفوظة من GELVANO TEAM © 2025 </div>
+        </div>
+    </footer>
+    <script>
+    // بيانات الفيديوهات (فيزياء)
+    const videos = [
+        // الصف الأول الثانوي
+        {
+            grade: "g1",
+            title: "مقدمة في الفيزياء للصف الأول الثانوي",
+            desc: "تعرف على أساسيات الفيزياء وأهم المفاهيم.",
+            thumb: "assets/6546847867645351321321354564687654545343.png",
+            videoPage: "first-grade-videos1.html",
+            filesPage: "first-grade-files1.html"
+        },
+        {
+            grade: "g1",
+            title: "الحركة والسرعة للصف الأول الثانوي",
+            desc: "شرح مفصل لموضوع الحركة والسرعة.",
+            thumb: "assets/6546847867645351321321354564687654545343.png",
+            videoPage: "first-grade-videos1.html",
+            filesPage: "first-grade-files1.html"
+        },
+        {
+            grade: "g1",
+            title: "قوانين نيوتن للصف الأول الثانوي",
+            desc: "توضيح قوانين نيوتن الثلاثة مع أمثلة.",
+            thumb: "assets/6546847867645351321321354564687654545343.png",
+            videoPage: "first-grade-videos1.html",
+            filesPage: "first-grade-files1.html"
+        },
+        // الصف الثاني الثانوي
+        {
+            grade: "g2",
+            title: "الكهرباء الساكنة للصف الثاني الثانوي",
+            desc: "مقدمة في الشحنات والقوى الكهربية.",
+            thumb: "assets/6546847867645351321321354564687654545343.png",
+            videoPage: "second-grade-videos1.html",
+            filesPage: "second-grade-files1.html"
+        },
+        {
+            grade: "g2",
+            title: "المجالات المغناطيسية للصف الثاني الثانوي",
+            desc: "شرح المجالات المغناطيسية وتطبيقاتها.",
+            thumb: "assets/6546847867645351321321354564687654545343.png",
+            videoPage: "second-grade-videos1.html",
+            filesPage: "second-grade-files1.html"
+        },
+        {
+            grade: "g2",
+            title: "الدوائر الكهربية للصف الثاني الثانوي",
+            desc: "حل مسائل الدوائر الكهربية خطوة بخطوة.",
+            thumb: "assets/6546847867645351321321354564687654545343.png",
+            videoPage: "second-grade-videos1.html",
+            filesPage: "second-grade-files1.html"
+        },
+        // الصف الثالث الثانوي
+        {
+            grade: "g3",
+            title: "الفيزياء الحديثة للصف الثالث الثانوي",
+            desc: "مقدمة في الفيزياء الحديثة والنظرية النسبية.",
+            thumb: "assets/6546847867645351321321354564687654545343.png",
+            videoPage: "third-grade-videos1.html",
+            filesPage: "third-grade-files1.html"
+        },
+        {
+            grade: "g3",
+            title: "الضوء والموجات للصف الثالث الثانوي",
+            desc: "شرح مفصل لموضوع الضوء والموجات.",
+            thumb: "assets/6546847867645351321321354564687654545343.png",
+            videoPage: "third-grade-videos1.html",
+            filesPage: "third-grade-files1.html"
+        },
+        {
+            grade: "g3",
+            title: "الفيزياء النووية للصف الثالث الثانوي",
+            desc: "تعرف على الفيزياء النووية وتطبيقاتها.",
+            thumb: "assets/6546847867645351321321354564687654545343.png",
+            videoPage: "third-grade-videos1.html",
+            filesPage: "third-grade-files1.html"
+        }
+    ];
+
+    // جلب الصف الدراسي من localStorage
+    function getStudentGrade() {
+        try {
+            const data = JSON.parse(localStorage.getItem("student_class"));
+            if (!data) return null;
+            if (data.g1) return "g1";
+            if (data.g2) return "g2";
+            if (data.g3) return "g3";
+            return null;
+        } catch {
+            return null;
+        }
+    }
+
+    // توليد الفيديوهات حسب الصف الدراسي
+    function renderVideos(filterText = "") {
+        const grade = getStudentGrade();
+        const container = document.getElementById("videosContainer");
+        const noVideos = document.getElementById("noVideos");
+        const showAllBtn = document.getElementById("showAllBtn");
+        container.innerHTML = "";
+        let filtered = videos.filter(v => v.grade === grade);
+        if (filterText.trim() !== "") {
+            const q = filterText.trim().toLowerCase();
+            filtered = filtered.filter(v =>
+                v.title.toLowerCase().includes(q) ||
+                v.desc.toLowerCase().includes(q)
+            );
+        }
+        if (filtered.length === 0) {
+            noVideos.style.display = "block";
+            showAllBtn.style.display = filterText.trim() !== "" ? "inline-block" : "none";
+            return;
+        }
+        noVideos.style.display = "none";
+        showAllBtn.style.display = "none";
+        filtered.forEach(v => {
+            const card = document.createElement("div");
+            card.className = "video-card";
+            card.innerHTML = `
+                <img src="${v.thumb}" alt="${v.title}" class="video-thumb" loading="lazy">
+                <div class="video-title">${v.title}</div>
+                <div class="video-desc">${v.desc}</div>
+                <div class="video-actions">
+                    <a href="${v.videoPage}" class="watch" title="مشاهدة الكورس">مشاهدة الكورس</a>
+                    <a href="${v.filesPage}" class="files" title="ملف الكورس">ملف الكورس</a>
+                </div>
+            `;
+            // عند الضغط على البطاقة نفسها (وليس فقط الزر)
+            card.addEventListener("click", function(e) {
+                if (!e.target.classList.contains("files")) {
+                    window.location.href = v.videoPage;
+                }
+            });
+            container.appendChild(card);
+        });
+    }
+
+    // حماية إضافية: لو الطالب حذف الصف من localStorage أثناء التصفح
+    function checkStudentGradeOrRedirect() {
+        if (!getStudentGrade()) {
+            window.location.href = "class.html";
+            return false;
+        }
+        return true;
+    }
+
+    // البحث مع لودينج
+    function searchWithLoading() {
+        if (!checkStudentGradeOrRedirect()) return;
+        const searchBtn = document.getElementById("searchBtn");
+        const searchInput = document.getElementById("searchInput");
+        searchBtn.disabled = true;
+        const oldText = searchBtn.innerHTML;
+        searchBtn.innerHTML = '<span class="loading-spinner"></span> بحث...';
+        setTimeout(() => {
+            renderVideos(searchInput.value);
+            searchBtn.disabled = false;
+            searchBtn.innerHTML = 'بحث';
+        }, 700);
+    }
+
+    // إظهار/إخفاء علامة × لمسح البحث
+    const searchInput = document.getElementById("searchInput");
+    const clearX = document.getElementById("clearX");
+    searchInput.addEventListener("input", function() {
+        if (this.value.length > 0) {
+            clearX.style.display = "block";
+        } else {
+            clearX.style.display = "none";
+        }
+    });
+    clearX.addEventListener("click", function() {
+        searchInput.value = "";
+        clearX.style.display = "none";
+        renderVideos("");
+    });
+
+    // زر "عرض كل الفيديوهات" عند عدم وجود نتائج
+    document.getElementById("showAllBtn").addEventListener("click", function() {
+        searchInput.value = "";
+        clearX.style.display = "none";
+        renderVideos("");
+    });
+
+    // زر البحث
+    document.getElementById("searchBtn").addEventListener("click", function() {
+        searchWithLoading();
+    });
+
+    // البحث عند الضغط على Enter
+    searchInput.addEventListener("keydown", function(e) {
+        if (e.key === "Enter") {
+            searchWithLoading();
+        }
+    });
+
+    // عند تحميل الصفحة
+    document.addEventListener("DOMContentLoaded", function() {
+        if (!checkStudentGradeOrRedirect()) return;
+        renderVideos("");
+    });
+
+    // ميزة: حفظ آخر بحث في الجلسة
+    window.addEventListener("beforeunload", function() {
+        sessionStorage.setItem("lastVideoSearch", searchInput.value);
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+        const last = sessionStorage.getItem("lastVideoSearch");
+        if (last) {
+            searchInput.value = last;
+            renderVideos(last);
+            clearX.style.display = last.length > 0 ? "block" : "none";
+        }
+    });
+
+    // حماية مستمرة: كل دقيقة تأكد من وجود الصف الدراسي
+    setInterval(checkStudentGradeOrRedirect, 60000);
+
+    // اجعل الضغط على اللوجو أو العنوان ينقل إلى صفحة index.html
+    document.getElementById("headerLogo").onclick = function() {
+        window.location.href = "index.html";
+    };
+    document.getElementById("headerTitle").onclick = function() {
+        window.location.href = "index.html";
+    };
+    </script>
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+    <script src="scriptblock.js"></script>
+</body>
+</html>

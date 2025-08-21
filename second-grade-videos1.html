@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فيديوهات الصف الثاني الثانوي - gelvano</title>
+    <link rel="icon" type="image/png" href="assets/6546847867645351321321354564687654545343.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="access-code.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="access-code.js" defer></script>
+    <style>
+        .videos-container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .course-section {
+            background-color: var(--light-gray);
+            border-radius: 15px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .course-title {
+            color: var(--primary-red);
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            text-align: center;
+        }
+
+        .videos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            justify-content: center;
+
+        }
+
+        .video-card {
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .video-thumbnail {
+            position: relative;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            background-color: var(--dark-gray);
+            overflow: hidden;
+        }
+
+        .video-thumbnail img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .play-button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 60px;
+            height: 60px;
+            background-color: rgba(227, 24, 55, 0.9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .play-button:hover {
+            background-color: var(--primary-red);
+            transform: translate(-50%, -50%) scale(1.1);
+        }
+
+        .play-button::after {
+            content: '';
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 10px 0 10px 20px;
+            border-color: transparent transparent transparent var(--white);
+            margin-left: 5px;
+        }
+
+        .video-info {
+            padding: 1.5rem;
+        }
+
+        .video-title {
+            color: var(--dark-gray);
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 1.1rem;
+        }
+
+        .video-description {
+            color: #666;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .video-meta {
+            display: flex;
+            justify-content: space-between;
+            color: #888;
+            font-size: 0.8rem;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background-color: var(--primary-red);
+        }
+    </style>
+    <script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_cHJvbXB0LWNoYW1vaXMtNDAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://prompt-chamois-40.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
+</script>
+</head>
+<body>
+    <div id="sign-in"></div>
+    <div id="main-content" style="display:none;">
+    <!-- Header with Logo -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html">
+                <img loading="lazy" src="assets/logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
+            </a>
+        </div>
+    </header>
+
+ 
+    <div class="videos-container">
+        <!-- شرح Course -->
+        <section class="course-section animate__animated animate__fadeInUp">
+            <h2 class="course-title">الشرح</h2>
+            <div class="videos-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img loading="lazy" src="assets/placeholder.jpg" alt="الفصل الاول">
+                        <a href="https://youtu.be/example1" class="play-button" data-type="video" data-content-id="second-grade-video-1">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">الفصل الاول</h3>
+                        <div class="video-meta">
+                            <span>
+                                <i class="far fa-clock"></i>
+                                المدة: 15:30
+                            </span>
+                            <span>
+                                <i class="far fa-eye"></i>
+                                المشاهدات: 1.2k
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- المراجعات Course -->
+        <section class="course-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <h2 class="course-title">المراجعات</h2>
+            <div class="videos-grid">
+                <div class="video-card">
+                    <div class="video-thumbnail">
+                        <img loading="lazy" src="assets/physics-thumbnail-1.jpg">
+                        <a href="https://drive.google.com/file/d/example2" class="play-button" data-type="video" data-content-id="second-grade-video-2">
+                            <i class="fas fa-play"></i>
+                        </a>
+                    </div>
+                    <div class="video-info">
+                        <h3 class="video-title">الوحدة الاولي</h3>
+                        <div class="video-meta">
+                            <span>المدة: 18:45</span>
+                            <span>المشاهدات: 1.5k</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+   <!-- Footer -->
+   <footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>  social media  </h3>
+            <p>  تابع صفحاتنا علي السوشيال ميديا عشان يوصلك كل جديد  </p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100064048811580#"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@Gelvano_ph12"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>روابط سريعة</h3>
+            <ul class="footer-links">
+                <li><a href="tests.html"><i class="fas fa-file-alt"></i> امتحانات اونلاين</a></li>
+                <li><a href="media.html"><i class="fas fa-play-circle"></i> ابدأ مذاكرة</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>تواصل مع تيم GELVANO</h3>
+            <p><i class="fab fa-whatsapp"></i> واتساب: 01070425779</p>  
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="copyright">
+            <p>جميع الحقوق محفوظة © 2025 - تم النشر بواسطة   team Gelvano </p>
+        </div>
+    </div>
+</footer>
+     </div>
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+    <script src="scriptblock.js"></script>
+        <script>
+const API_URL = "https://68a3fbe0c123272fb9b0ee15.mockapi.io/gelvano";
+const NOTIF_URL = "https://68a25cb6c5a31eb7bb1ccafd.mockapi.io/notifications";
+const LESSON_NAME = "B"; // غيّر اسم الحصة حسب الفيديو
+
+function getCurrentUserEmail(){
+  if (window.Clerk && Clerk.user){
+    if (Clerk.user.primaryEmailAddress && Clerk.user.primaryEmailAddress.emailAddress){
+      return Clerk.user.primaryEmailAddress.emailAddress;
+    } else if (Clerk.user.emailAddresses && Clerk.user.emailAddresses.length > 0) {
+      return Clerk.user.emailAddresses[0].emailAddress;
+    }
+  }
+  return "غير معروف";
+}
+function getCurrentUserId(){
+  if (window.Clerk && Clerk.user && Clerk.user.id) {
+    return Clerk.user.id;
+  }
+  return "غير معروف";
+}
+function getCurrentUsername(){
+  if (window.Clerk && Clerk.user && Clerk.user.id) {
+    return Clerk.user.firstName || "غير معروف";
+  }
+  return "غير معروف";
+}
+function encode(str) { return btoa(unescape(encodeURIComponent(str))); }
+function decode(str) { try { return decodeURIComponent(escape(atob(str))); } catch(e){ return ""; } }
+
+async function safeFetch(url, opt){
+  try {
+    const r = await fetch(url, opt);
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return await r.json();
+  } catch(e) {
+    throw new Error("فشل الاتصال بالخادم");
+  }
+}
+async function sendCustomNotif(payload) {
+  try {
+    const body = Object.assign({}, payload, { createdAt: new Date().toISOString() });
+    await fetch(NOTIF_URL, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(body)
+    });
+  } catch(e) {
+    // يمكن إضافة رسالة خطأ هنا إذا أردت
+  }
+}
+function isValidCode(code) { return /^[A-Z0-9]{4,10}$/.test(code); }
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".play-button").forEach(btn => {
+    btn.addEventListener("click", function(e) {
+      e.preventDefault();
+      handleVideoAccess(this.getAttribute("href"));
+    });
+  });
+});
+
+// دالة الدخول للفيديو مع التحقق من الحساب والكود
+function handleVideoAccess(videoUrl) {
+  const currentEmail = getCurrentUserEmail();
+  const savedCode = localStorage.getItem("studentCode") ? decode(localStorage.getItem("studentCode")) : null;
+  const savedEmail = localStorage.getItem("studentEmail") ? decode(localStorage.getItem("studentEmail")) : null;
+
+  if(savedCode && savedEmail && currentEmail && savedEmail === currentEmail){
+    safeFetch(API_URL).then(codes => {
+      const codeObj = Array.isArray(codes) ? codes.find(c=> String(c.code).toUpperCase()===String(savedCode).toUpperCase() && c.lessonName === LESSON_NAME) : null;
+      if(codeObj && codeObj.isUsed && codeObj.userEmail === currentEmail){
+        showVideoModal(videoUrl);
+      }else{
+        showCodeModalForm(videoUrl);
+      }
+    }).catch(()=> showCodeModalForm(videoUrl));
+  }else{
+    showCodeModalForm(videoUrl);
+  }
+}
+
+function showCodeModalForm(videoUrl, customMsg) {
+  const modal = document.createElement("div");
+  modal.style = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:9999";
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:14px;box-shadow:0 8px 30px #0003;padding:28px 22px;max-width:370px;width:95vw;text-align:center;position:relative;">
+      <button onclick="document.body.removeChild(this.parentNode.parentNode)" style="position:absolute;top:12px;right:12px;background:#dc2626;color:#fff;border:none;border-radius:8px;padding:6px 14px;cursor:pointer;">إغلاق</button>
+      <h3 style="margin-bottom:18px;color:#2563eb;">أدخل كود الحصة</h3>
+      <input id="modalLessonCodeInput" type="text" placeholder="كود الحصة" style="width:90%;padding:10px;border-radius:7px;border:1px solid #ccc;margin-bottom:12px;">
+      <button onclick="checkModalCode('${videoUrl}', this)" style="background:#2563eb;color:#fff;padding:10px 30px;border:none;border-radius:7px;font-size:1.1rem;cursor:pointer;">دخول</button>
+      <div id="modalLessonMsg" style="color:#e74c3c;margin-top:10px;">${customMsg||""}</div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+async function checkModalCode(videoUrl, btn) {
+  const msgEl = document.getElementById("modalLessonMsg");
+  const code = (document.getElementById("modalLessonCodeInput").value || "").trim().toUpperCase();
+  const userEmail = getCurrentUserEmail();
+  const username  = getCurrentUsername();
+  const userId    = getCurrentUserId();
+
+  if (!isValidCode(code)) {
+    msgEl.textContent = "❌ الكود غير صالح.";
+    await sendCustomNotif({
+      code,
+      username,
+      userEmail,
+      message: "محاولة إدخال كود غير صحيح للفيديو",
+      highlight: false
+    });
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = "جارى التحقق...";
+  try {
+    const codes = await safeFetch(API_URL);
+    const codeObj = Array.isArray(codes) ? codes.find(c => String(c.code).toUpperCase() === code && c.lessonName === LESSON_NAME) : null;
+
+    if (!codeObj) {
+      msgEl.textContent = "❌ الكود غير مرتبط بهذه الحصة.";
+      await sendCustomNotif({
+        code,
+        username,
+        userEmail,
+        message: "محاولة إدخال كود غير مرتبط بالحصة المطلوبة",
+        highlight: false
+      });
+      btn.disabled = false; btn.textContent = "دخول";
+      return;
+    }
+
+    if (codeObj.isUsed && codeObj.userEmail !== userEmail) {
+      msgEl.textContent = "⚠️ تم التسجيل بهذا الكود بالفعل تواصل مع الإدارة.";
+      await sendCustomNotif({
+        code,
+        ownerUsername: codeObj.username || "غير معروف",
+        ownerEmail: codeObj.userEmail || "غير معروف",
+        attemptUsername: username,
+        attemptEmail: userEmail,
+        attemptUserId: userId,
+        message: "محاولة دخول بكود مستخدم بالفعل من حساب آخر",
+        highlight: false
+      });
+      btn.disabled = false; btn.textContent = "دخول";
+      return;
+    }
+    // سجل الكود كـ مستخدم لهذا الإيميل
+    if (!codeObj.isUsed) {
+      await safeFetch(`${API_URL}/${codeObj.id}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          ...codeObj,
+          isUsed: true,
+          userEmail,
+          username,
+          userId,
+          createdAt: codeObj.createdAt || new Date().toISOString()
+        })
+      });
+      localStorage.setItem("studentCode", encode(codeObj.code));
+      localStorage.setItem("studentEmail", encode(userEmail));
+      localStorage.setItem("studentUserId", encode(userId));
+      await sendCustomNotif({
+        code: codeObj.code,
+        username,
+        userEmail,
+        message: "تم فتح الفيديو بنجاح",
+        highlight: true
+      });
+    }
+    localStorage.setItem("studentCode", encode(codeObj.code));
+    localStorage.setItem("studentEmail", encode(userEmail));
+    localStorage.setItem("studentUserId", encode(userId));
+    showVideoModal(videoUrl);
+    document.querySelectorAll("body > div").forEach(d => { if(d.style.zIndex=="9999") d.remove(); });
+  } catch(e) {
+    msgEl.textContent = "حدث خطأ أثناء التحقق.";
+    btn.disabled = false; btn.textContent = "دخول";
+  }
+}
+
+function showVideoModal(videoUrl) {
+  const modal = document.createElement("div");
+  modal.style = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999";
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:14px;box-shadow:0 8px 30px #0003;padding:18px;max-width:700px;width:95vw;text-align:center;position:relative;">
+      <button onclick="document.body.removeChild(this.parentNode.parentNode)" style="position:absolute;top:12px;right:12px;background:#dc2626;color:#fff;border:none;border-radius:8px;padding:6px 14px;cursor:pointer;">إغلاق</button>
+      <iframe src="${videoUrl}" width="100%" height="400" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+</script>
+</body>
+</html>

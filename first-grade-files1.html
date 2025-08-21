@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملفات الصف الأول الثانوي - gelvano</title>
+    <link rel="icon" type="image/png" href="assets/6546847867645351321321354564687654545343.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="access-code.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="access-code.js" defer></script>
+    <style>
+        .files-container {
+            max-width: 1200px;
+            margin: 2.5rem auto;
+            padding: 0 1.5rem;
+        }
+
+        .subject-section {
+            background-color: var(--white);
+            border-radius: var(--border-radius-lg);
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            box-shadow: var(--shadow-md);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .subject-section:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-2px);
+        }
+
+        .subject-title {
+            color: var(--primary-red);
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            text-align: center;
+            font-weight: 700;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+
+        .subject-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-red);
+            border-radius: 2px;
+        }
+
+        .files-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 1rem;
+            justify-content: center;
+
+        }
+
+        .file-card {
+            background-color: var(--white);
+            border-radius: var(--border-radius-md);
+            padding: 1.5rem;
+            text-align: center;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .file-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .file-icon {
+            color: var(--primary-red);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .file-name {
+            color: var(--dark-gray);
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+        }
+
+        .download-button {
+            background-color: var(--primary-red);
+            color: var(--white);
+            padding: 0.75rem 1.5rem;
+            border-radius: var(--border-radius-lg);
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            max-width: 200px;
+        }
+
+        .download-button:hover {
+            background-color: var(--light-red);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .download-button i {
+            font-size: 1.1rem;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--dark-gray);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: var(--border-radius-lg);
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .back-button:hover {
+            background-color: var(--primary-red);
+            transform: translateY(-2px);
+        }
+
+        .back-button i {
+            font-size: 1.1rem;
+        }
+    </style>
+    <script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_cHJvbXB0LWNoYW1vaXMtNDAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://prompt-chamois-40.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
+</script>
+</head>
+<body>
+    <div id="sign-in"></div>
+   
+     <div id="main-content" style="display:none;">
+    <!-- Header with Logo -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html">
+                <img loading="lazy" src="assets\logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
+            </a>
+        </div>
+    </header>
+
+    <div class="files-container">
+        <!-- الاسئلة Section -->
+        <section class="subject-section animate__animated animate__fadeInUp">
+            <h2 class="subject-title">الاسئلة</h2>
+            <div class="files-grid">
+                <div class="file-card">
+                    <div class="file-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="file-name">الوحدة الأولى</div>
+                    <a href="files\الصف الاول الثانوي\الفصل الثاني.pdf" class="download-button" data-type="file" data-content-id="first-grade-file-1">
+                        <i class="fas fa-download"></i>
+                        تحميل الملف
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- الملخصات Section -->
+        <section class="subject-section animate__animated animate__fadeInUp" style="animation-delay: 0.2s">
+            <h2 class="subject-title">الملخصات</h2>
+            <div class="files-grid">
+                <div class="file-card">
+                    <div class="file-icon">
+                        <i class="fas fa-file-pdf"></i>
+                    </div>
+                    <div class="file-name">الوحدة الأولى</div>
+                    <a href="https://example.com/summary1.pdf" class="download-button" data-type="file" data-content-id="first-grade-file-2">
+                        <i class="fas fa-download"></i>
+                        تحميل الملف
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+   <!-- Footer -->
+   <footer class="footer">
+    <div class="footer-content">
+        <div class="footer-section">
+            <h3>  social media  </h3>
+            <p>  تابع صفحاتنا علي السوشيال ميديا عشان يوصلك كل جديد  </p>
+            <div class="social-links">
+                <a href="https://www.facebook.com/profile.php?id=100064048811580#"><i class="fab fa-facebook"></i></a>
+                <a href="https://www.youtube.com/@Gelvano_ph12"><i class="fab fa-youtube"></i></a>
+            </div>
+        </div>
+        <div class="footer-section">
+            <h3>روابط سريعة</h3>
+            <ul class="footer-links">
+                <li><a href="tests.html"><i class="fas fa-file-alt"></i> امتحانات اونلاين</a></li>
+                <li><a href="media.html"><i class="fas fa-play-circle"></i> ابدأ مذاكرة</a></li>
+            </ul>
+        </div>
+        <div class="footer-section">
+            <h3>تواصل مع تيم GELVANO</h3>
+            <p><i class="fab fa-whatsapp"></i> واتساب: 01070425779</p>  
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="copyright">
+            <p>جميع الحقوق محفوظة © 2025 - تم النشر بواسطة   team Gelvano </p>
+        </div>
+    </div>
+</footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+    <script src="scriptblock.js"></script>
+    <script>
+const API_URL = "https://68a3fbe0c123272fb9b0ee15.mockapi.io/gelvano";
+const NOTIF_URL = "https://68a25cb6c5a31eb7bb1ccafd.mockapi.io/notifications";
+const LESSON_NAME = "A"; // غيّر اسم الحصة حسب الملفات
+
+function getCurrentUserEmail(){
+  if (window.Clerk && Clerk.user){
+    if (Clerk.user.primaryEmailAddress && Clerk.user.primaryEmailAddress.emailAddress){
+      return Clerk.user.primaryEmailAddress.emailAddress;
+    } else if (Clerk.user.emailAddresses && Clerk.user.emailAddresses.length > 0) {
+      return Clerk.user.emailAddresses[0].emailAddress;
+    }
+  }
+  return "غير معروف";
+}
+function getCurrentUserId(){
+  if (window.Clerk && Clerk.user && Clerk.user.id) {
+    return Clerk.user.id;
+  }
+  return "غير معروف";
+}
+function getCurrentUsername(){
+  if (window.Clerk && Clerk.user && Clerk.user.id) {
+    return Clerk.user.firstName || "غير معروف";
+  }
+  return "غير معروف";
+}
+function encode(str) { return btoa(unescape(encodeURIComponent(str))); }
+function decode(str) { try { return decodeURIComponent(escape(atob(str))); } catch(e){ return ""; } }
+
+async function safeFetch(url, opt){
+  try {
+    const r = await fetch(url, opt);
+    if(!r.ok) throw new Error("HTTP "+r.status);
+    return await r.json();
+  } catch(e) {
+    throw new Error("فشل الاتصال بالخادم");
+  }
+}
+async function sendCustomNotif(payload) {
+  try {
+    const body = Object.assign({}, payload, { createdAt: new Date().toISOString() });
+    await fetch(NOTIF_URL, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(body)
+    });
+  } catch(e) {}
+}
+function isValidCode(code) { return /^[A-Z0-9]{4,10}$/.test(code); }
+
+document.addEventListener("DOMContentLoaded", function() {
+  document.querySelectorAll(".download-button").forEach(btn => {
+    btn.addEventListener("click", function(e) {
+      e.preventDefault();
+      handleFileAccess(this.getAttribute("href"));
+    });
+  });
+});
+
+function handleFileAccess(fileUrl) {
+  const currentEmail = getCurrentUserEmail();
+  const savedCode = localStorage.getItem("studentCode") ? decode(localStorage.getItem("studentCode")) : null;
+  const savedEmail = localStorage.getItem("studentEmail") ? decode(localStorage.getItem("studentEmail")) : null;
+
+  if(savedCode && savedEmail && currentEmail){
+    safeFetch(API_URL).then(codes => {
+      const codeObj = Array.isArray(codes) ? codes.find(c=> String(c.code).toUpperCase()===String(savedCode).toUpperCase() && c.lessonName === LESSON_NAME) : null;
+      if(codeObj && codeObj.isUsed){
+        if(codeObj.userEmail === currentEmail){
+          sendCustomNotif({
+            code: codeObj.code,
+            username: getCurrentUsername(),
+            userEmail: currentEmail,
+            message: "دخول تلقائي بنفس الحساب والكود",
+            highlight: true
+          });
+          showFileModal(fileUrl);
+        }else{
+          sendCustomNotif({
+            code: codeObj.code,
+            ownerUsername: codeObj.username || "غير معروف",
+            ownerEmail: codeObj.userEmail || "غير معروف",
+            attemptUsername: getCurrentUsername(),
+            attemptEmail: currentEmail,
+            attemptUserId: getCurrentUserId(),
+            message: "محاولة دخول بكود مستخدم بالفعل من حساب آخر",
+            highlight: false
+          });
+          showCodeModalForm(fileUrl, "⚠️ تم التسجيل بهذا الكود بالفعل تواصل مع الإدارة.");
+        }
+      }else{
+        showCodeModalForm(fileUrl);
+      }
+    }).catch(()=> showCodeModalForm(fileUrl));
+  }else{
+    showCodeModalForm(fileUrl);
+  }
+}
+
+function showCodeModalForm(fileUrl, customMsg) {
+  const modal = document.createElement("div");
+  modal.style = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.6);display:flex;align-items:center;justify-content:center;z-index:9999";
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:14px;box-shadow:0 8px 30px #0003;padding:28px 22px;max-width:370px;width:95vw;text-align:center;position:relative;">
+      <button onclick="document.body.removeChild(this.parentNode.parentNode)" style="position:absolute;top:12px;right:12px;background:#dc2626;color:#fff;border:none;border-radius:8px;padding:6px 14px;cursor:pointer;">إغلاق</button>
+      <h3 style="margin-bottom:18px;color:#2563eb;">أدخل كود الحصة</h3>
+      <input id="modalLessonCodeInput" type="text" placeholder="كود الحصة" style="width:90%;padding:10px;border-radius:7px;border:1px solid #ccc;margin-bottom:12px;">
+      <button onclick="checkModalCode('${fileUrl}', this)" style="background:#2563eb;color:#fff;padding:10px 30px;border:none;border-radius:7px;font-size:1.1rem;cursor:pointer;">دخول</button>
+      <div id="modalLessonMsg" style="color:#e74c3c;margin-top:10px;">${customMsg||""}</div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+async function checkModalCode(fileUrl, btn) {
+  const msgEl = document.getElementById("modalLessonMsg");
+  const code = (document.getElementById("modalLessonCodeInput").value || "").trim().toUpperCase();
+  const userEmail = getCurrentUserEmail();
+  const username  = getCurrentUsername();
+  const userId    = getCurrentUserId();
+
+  if (!isValidCode(code)) {
+    msgEl.textContent = "❌ الكود غير صالح.";
+    await sendCustomNotif({
+      code,
+      username,
+      userEmail,
+      message: "محاولة إدخال كود غير صحيح للملف",
+      highlight: false
+    });
+    return;
+  }
+  btn.disabled = true;
+  btn.textContent = "جارى التحقق...";
+  try {
+    const codes = await safeFetch(API_URL);
+    const codeObj = Array.isArray(codes) ? codes.find(c => String(c.code).toUpperCase() === code && c.lessonName === LESSON_NAME) : null;
+
+    if (!codeObj) {
+      msgEl.textContent = "❌ الكود غير مرتبط بهذه الحصة.";
+      await sendCustomNotif({
+        code,
+        username,
+        userEmail,
+        message: "محاولة إدخال كود غير مرتبط بالحصة المطلوبة",
+        highlight: false
+      });
+      btn.disabled = false; btn.textContent = "دخول";
+      return;
+    }
+
+    if (codeObj.isUsed && codeObj.userEmail !== userEmail) {
+      msgEl.textContent = "⚠️ تم التسجيل بهذا الكود بالفعل تواصل مع الإدارة.";
+      await sendCustomNotif({
+        code,
+        ownerUsername: codeObj.username || "غير معروف",
+        ownerEmail: codeObj.userEmail || "غير معروف",
+        attemptUsername: username,
+        attemptEmail: userEmail,
+        attemptUserId: userId,
+        message: "محاولة دخول بكود مستخدم بالفعل من حساب آخر",
+        highlight: false
+      });
+      btn.disabled = false; btn.textContent = "دخول";
+      return;
+    }
+    // سجل الكود كـ مستخدم لهذا الإيميل
+    if (!codeObj.isUsed) {
+      await safeFetch(`${API_URL}/${codeObj.id}`, {
+        method: "PUT",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+          ...codeObj,
+          isUsed: true,
+          userEmail,
+          username,
+          userId,
+          createdAt: codeObj.createdAt || new Date().toISOString()
+        })
+      });
+      localStorage.setItem("studentCode", encode(codeObj.code));
+      localStorage.setItem("studentEmail", encode(userEmail));
+      localStorage.setItem("studentUserId", encode(userId));
+      await sendCustomNotif({
+        code: codeObj.code,
+        username,
+        userEmail,
+        message: "تم فتح الملف بنجاح",
+        highlight: true
+      });
+    }
+    showFileModal(fileUrl);
+    document.querySelectorAll("body > div").forEach(d => { if(d.style.zIndex=="9999") d.remove(); });
+  } catch(e) {
+    msgEl.textContent = "حدث خطأ أثناء التحقق.";
+    btn.disabled = false; btn.textContent = "دخول";
+  }
+}
+
+function showFileModal(fileUrl) {
+  const modal = document.createElement("div");
+  modal.style = "position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;z-index:9999";
+  modal.innerHTML = `
+    <div style="background:#fff;border-radius:14px;box-shadow:0 8px 30px #0003;padding:18px;max-width:700px;width:95vw;text-align:center;position:relative;">
+      <button onclick="document.body.removeChild(this.parentNode.parentNode)" style="position:absolute;top:12px;right:12px;background:#dc2626;color:#fff;border:none;border-radius:8px;padding:6px 14px;cursor:pointer;">إغلاق</button>
+      <iframe src="${fileUrl}" width="100%" height="400" frameborder="0" allowfullscreen style="border-radius:10px;"></iframe>
+      <a href="${fileUrl}" target="_blank" style="display:block;margin-top:18px;color:#2563eb;font-weight:bold;">تحميل الملف مباشرة</a>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+</script>
+</body>
+</html>

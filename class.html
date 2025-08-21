@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/png" href="assets/6546847867645351321321354564687654545343.png">
+  <title>اختيار الصف الدراسي</title>
+  <style>
+    body {
+      font-family: "Tahoma", sans-serif;
+      background: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #class-popup {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      max-width: 320px;
+      width: 100%;
+      padding: 20px;
+      border-radius: 12px;
+      background: #fff;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      text-align: center;
+    }
+    #class-select, #save-class {
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+    #save-class {
+      background: #ff4d4d;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    #save-class:hover { background: #e63939; }
+  </style>
+  <script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_cHJvbXB0LWNoYW1vaXMtNDAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://prompt-chamois-40.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
+</script>
+</head>
+<body>
+  <div id="class-popup">
+    <h2>اختر الصف الدراسي</h2>
+    <p> يرجى العلم بأنة لن يتم تغيير الصف الدراسى او  المرحلة الدراسية حتى اخر العام الدراسى ☺️</p>
+    <select id="class-select">
+      <option value="">-- اختر الصف --</option>
+      <option value="g1">الأول الثانوي</option>
+      <option value="g2">الثاني الثانوي</option>
+      <option value="g3">الثالث الثانوي</option>
+    </select>
+    <button id="save-class">حفظ</button>
+  </div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const saved = localStorage.getItem("student_class");
+  if (saved) {
+    window.location.href = "index.html";
+    return;
+  }
+
+  const saveBtn = document.getElementById("save-class");
+  const classSelect = document.getElementById("class-select");
+
+  saveBtn.addEventListener("click", () => {
+    const selected = classSelect.value;
+    if (!selected) {
+      alert("من فضلك اختر الصف الدراسي ☺️ !");
+      return;
+    }
+
+    // نحفظ كائن زي { g1:true }
+    const obj = {};
+    obj[selected] = true;
+    localStorage.setItem("student_class", JSON.stringify(obj));
+
+    window.location.href = "index.html";
+  });
+});
+</script>
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+    <script src="scriptblock.js"></script>
+</body>
+</html>

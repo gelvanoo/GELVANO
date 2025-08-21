@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>gelvano</title>
+    <link rel="icon" type="image/png" href="assets/6546847867645351321321354564687654545343.png">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .whatsapp-button {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        .whatsapp-button:hover {
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.3);
+        }
+        .whatsapp-button i {
+            font-size: 35px;
+        }
+        .whatsapp-button .support-text {
+            font-size: 12px;
+            margin-top: -5px;
+            margin-bottom: 5px;
+        }
+        .moving-underline {
+            position: relative;
+            font-weight: 800;
+            color: #d5472f;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+        .moving-underline::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #d5472f, #ff8671);
+            animation: moveLine 2s ease-in-out infinite;
+            border-radius: 2px;
+        }
+        @keyframes moveLine {
+            0% {
+                transform: scaleX(0.8);
+                opacity: 0.5;
+            }
+            50% {
+                transform: scaleX(1.1);
+                opacity: 1;
+            }
+            100% {
+                transform: scaleX(0.8);
+                opacity: 0.5;
+            }
+        }
+
+        /* Medium Image Section Styles */
+        .medium-image-section {
+            padding: 2rem 0;
+            text-align: center;
+            background-color: #f8f9fa;
+        }
+
+        .image-container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+
+        .medium-image {
+            width: 100%;
+            height: auto;
+            max-height: 400px;
+            object-fit: contain;
+            border-radius: 8px;
+        }
+
+        /* Services Section Styles */
+        .services-section {
+            padding: 2rem 2rem;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            text-align: center;
+        }
+
+        .services-section h2 {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .services-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            max-width: 1000px;
+            margin: 1rem auto;
+            padding: 0 1rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-icon {
+            margin-bottom: 1.5rem;
+        }
+
+        .service-icon i {
+            font-size: 3rem;
+            color: #d5472f;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            color: #333;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+         #sign-in {
+           display: flex;
+           justify-content: center;
+           align-items: center;
+           height: 100vh;
+           background: linear-gradient(135deg, #f8f8f8, #e8e8e8);
+           overflow: hidden;
+        }
+        .header {
+  display: flex;
+  justify-content: space-between; /* يفصل اللوجو عن الأيقونة */
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #fff; /* أو أي لون خلفية الهيدر */
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+}
+
+#user-button {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-40px);}
+            to { opacity: 1; transform: translateY(0);}
+        }
+
+        @media (max-width: 768px) {
+            .services-container {
+                grid-template-columns: 1fr;
+                padding: 0 1rem;
+            }
+            
+            .service-card {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+    <script
+  async
+  crossorigin="anonymous"
+  data-clerk-publishable-key="pk_test_cHJvbXB0LWNoYW1vaXMtNDAuY2xlcmsuYWNjb3VudHMuZGV2JA"
+  src="https://prompt-chamois-40.clerk.accounts.dev/npm/@clerk/clerk-js@latest/dist/clerk.browser.js">
+</script>
+</head>
+<body>
+    <div id="sign-in"></div>
+    <div id="main-content"> 
+    <!-- Student Name Display -->
+    <div id="studentNameDisplay" style="display:none; text-align:center; font-size:1.3rem; font-weight:bold; color:#d5472f; margin-top:0.5rem;"></div>
+
+    <!-- WhatsApp Button -->
+    <a href="https://wa.me/message/NI47K5DKEZUIE1" class="whatsapp-button animate__animated animate__fadeInLeft" target="_blank">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+
+    <!-- Header with Logo -->
+    <header class="header">
+        <div class="logo-container">
+            <a href="index.html">
+                <img loading="lazy" src="assets/logo.png" alt="شعار الموقع" class="logo animate__animated animate__fadeIn">
+            </a>
+        </div>
+        <div id="user-button"></div>
+    </header>
+
+
+    <!-- Banner Section -->
+    <section class="banner">
+        <div class="banner-content">
+            <h1 class="welcome-text animate__animated animate__slideInRight">
+                كل مشاكلك في الفيزياااا</span> محلولة مع <span class="highlight">جلڤانو </span> !!
+            </h1>
+            <div class="banner-image">
+                <img loading="lazy" src="assets/6546847867645351321321354564687654545343.png" alt="صورة ترحيبية" class="animate__animated animate__fadeIn">
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Navigation Buttons -->
+    <section class="main-buttons">
+        <a href="tests.html" class="nav-button animate__animated animate__fadeInUp">إمتحان اونلاين</a>
+        <a href="videos.html" class="nav-button animate__animated animate__fadeInUp">ابدأ مذاكرة<span style="font-size:0.98rem; color:#888;">(بالشهر)</span></a>
+    </section>
+    <div style="display:flex; flex-direction:column; align-items:center;">
+        <a href="videos1.html" class="nav-button animate__animated animate__fadeInUp" class="main-btn" style="background:#f13030; color:#fff; padding:16px 38px; border-radius:10px; font-size:1.2rem; text-decoration:none; margin-bottom:5px;">مشاهدة الكورسات (بالحصة)</a>
+        <span style="font-size:0.98rem; color:#f13030;">
+            (بالحصة) - يمكنك مشاهدة فيديوهات الحصص مباشرة باستخدام كود الحصة الخاص بك.
+        </span>
+    </div>
+
+    <!-- سكشن شرح الدخول بكود الحصة -->
+    <section style="margin:40px auto 0 auto; max-width:500px; background:#fff3e0; border-radius:12px; padding:22px 18px; box-shadow:0 2px 8px rgba(255,179,71,0.08); text-align:center;">
+        <h3 style="color:#ff9800; margin-bottom:10px;">دخول بالكود الخاص بالحصة</h3>
+        <p style="color:#444; font-size:1.08rem;">
+            إذا كان لديك كود خاص بحصة معينة، يمكنك الدخول مباشرة لمشاهدة فيديو الحصة من خلال الضغط على زر
+            <span style="color:#ff9800; font-weight:bold;">مشاهدة الكورسات (بالحصة)</span>
+            ثم إدخال الكود الخاص بك في المكان المخصص داخل صفحة الفيديوهات.
+        </p>
+    </section>
+
+    <!-- Medium Image Section -->
+    <section class="medium-image-section">
+        <div class="image-container animate__animated animate__fadeIn">
+            <img src="assets/22 logo .png" alt="صورة توضيحية" class="medium-image">
+        </div>
+    </section>
+
+    <!-- Profile Section -->
+    <section class="profile-section">
+        <h2 class="moving-underline"> هدفنا </h2>
+        <div class="profile-content animate__animated animate__fadeIn">
+            <p>منصة جلفانو في الفيزياء والعلوم المتكامله بتوفر لك اقوي شرح وحل ومراجعة واهم الملفات اللي هتلاقي فيها كل الملخصات والاسئلة اللي هتخليك قد اي سوال يا بطل </p>
+          <p>.........</p>
+            <h1>MR/Khaled Osama</h1>     
+                   <h3> Physics Teacher</h3>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section">
+        <h2 class="moving-underline">ما نقدمة لك </h2>
+        <div class="services-container">
+            <div class="service-card animate__animated animate__fadeInUp">
+                <div class="service-icon">
+                    <i class="fas fa-book-open fa-bounce"></i>
+                </div>
+                <h3>شرح تفصيلي</h3>
+                <p>شرح مبسط ومفصل لجميع دروس الفيزياء والعلوم المتكاملة</p>
+            </div>
+            <div class="service-card animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                <div class="service-icon">
+                    <i class="fas fa-file-alt fa-shake"></i>
+                </div>
+                <h3>ملخصات شاملة</h3>
+                <p>ملخصات مركزة تغطي اهم النقاط الهامه الوارده في الاسئلة  </p>
+            </div>
+            <div class="service-card animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                <div class="service-icon">
+                    <i class="fas fa-video fa-beat"></i>
+                </div>
+                <h3>فيديوهات تعليمية</h3>
+                <p>شرح مرئي لجميع الدروس بأعلي جوده واستفاده عالية </p>
+            </div>
+            <div class="service-card animate__animated animate__fadeInUp" style="animation-delay: 0.6s;">
+                <div class="service-icon">
+                    <i class="fas fa-tasks fa-flip"></i>
+                </div>
+                <h3>تمارين واختبارات</h3>
+                <p>مجموعة متنوعة من التمارين والاختبارات التفاعلية التي تؤهلك للأختبار النهائي </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>  social media  </h3>
+                <p>  تابع صفحاتنا علي السوشيال ميديا عشان يوصلك كل جديد  </p>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/profile.php?id=100064048811580#" target="_blank"><i class="fab fa-facebook"></i></a>
+                    <a href="https://www.youtube.com/@Gelvano_ph12" target="_blank"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>روابط سريعة</h3>
+                <ul class="footer-links">
+                    <li><a href="tests.html"><i class="fas fa-file-alt"></i> امتحانات اونلاين</a></li>
+                    <li><a href="videos1.html"><i class="fas fa-play-circle"></i> ابدأ مذاكرة</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>تواصل مع تيم GELVANO</h3>
+                <p><i class="fab fa-whatsapp"></i> واتساب: 01070425779</p>  
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div class="copyright">
+                <p>جميع الحقوق محفوظة © 2025 - تم النشر بواسطة   team Gelvano </p>
+            </div>
+        </div>
+    </footer>
+    </div>
+
+    <script src="script.js"></script>
+    <script src="login.js"></script>
+    <script src="scriptblock.js"></script>
+    <script>
+  // منع ظهور محتوى الموقع حتى تسجيل الدخول
+  document.addEventListener('DOMContentLoaded', function() {
+      var mainContent = document.getElementById('main-content');
+      mainContent.style.display = 'none';
+
+      // مثال: عند نجاح تسجيل الدخول أظهر المحتوى
+      // استبدل هذا الكود بما يناسب طريقة تسجيل الدخول عندك
+      window.showMainContent = function() {
+          mainContent.style.display = 'block';
+      }
+      // إذا كان عندك كود تسجيل دخول في login.js أو غيره
+      // استدعي window.showMainContent() بعد نجاح تسجيل الدخول
+  });
+</script>
+</body>
+</html>
